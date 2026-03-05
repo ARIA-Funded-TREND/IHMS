@@ -1,0 +1,19 @@
+import util
+import solutions.torch_solutions
+import tasks.rl_tasks
+
+
+# Solution configurations
+torch_solutions.CMIPIFCSolutionForAcrobot.act_dim = 1
+torch_solutions.CMIPIFCSolutionForAcrobot.hidden_dim = 32
+torch_solutions.CMIPIFCSolutionForAcrobot.msg_dim = 32
+torch_solutions.CMIPIFCSolutionForAcrobot.pos_em_dim = 8
+util.create_solution.solution_loader = @torch_solutions.CMIPIFCSolutionForAcrobot
+
+
+# Task configurations
+rl_tasks.PyBulletTask.env_name = "Acrobot-v1"
+rl_tasks.PyBulletTask.shuffle_on_reset = False
+rl_tasks.PyBulletTask.render = False
+rl_tasks.PyBulletTask.v = False
+util.create_task.task_loader = @rl_tasks.PyBulletTask()

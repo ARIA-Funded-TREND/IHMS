@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: "Scalable Machines With Intrinsic Higher Mental States"
+message: "If you use this code, please cite it as below."
+authors:
+  - family-names: Adeel
+    given-names: Ahsan
+    orcid: 
+version: 0.1
+identifiers:
+  - type: doi
+    value: 
+date-released: 2026-02-01

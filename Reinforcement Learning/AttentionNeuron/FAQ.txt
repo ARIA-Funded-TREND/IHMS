@@ -1,0 +1,6 @@
+* For headless machine xcfvb needs to be used 'xvfb-run -s "-screen 0 1400x900x24" python train_agent.py  --config configs/x.gin  --log-dir log/x  --num-gpus 0  --num-workers 6 '
+* Most problamatic dependencies are gym ,pybullet and box2d-py make sure they are compatible
+* Make sure Numpy version is correct for reproducibility 
+* Acrobot being a discrete env has been trained using Sample Technqiue which may cause results to vary during inference time.
+* If an issue arises due to invalid config file, undo the recent changes and update using VS Code.
+* best.npz files are model files saved by training from sratch while model.npz files were trained and provided in the reference paper.

@@ -1,0 +1,9 @@
+accelerate==1.10.1
+datasets==4.4.2
+huggingface==0.0.1
+huggingface_hub==1.2.4
+pillow==11.3.0
+safetensors==0.7.0
+torch==2.8.0
+torchvision==0.23.0
+wandb==0.23.1
