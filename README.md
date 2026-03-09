@@ -4,7 +4,7 @@
   </a>
 </p>
 
-# Scalable Machines With Intrinsic Higher Mental States
+# Scalable Machines with Intrinsic Higher Mental-State Dynamics
 
 <p align="center">
   <a href="https://cmilab.org/aichip/trend/">
@@ -14,7 +14,7 @@
 
 ## 🌐 Overview 
 
-Reference implementation of **Scalable Machines with Intrinsic Higher Mental States**: Co⁴ architecture.
+Reference implementation of **Scalable Machines with Intrinsic Higher Mental-State Dynamics**: Co⁴ architecture.
 
 
 This repository is released as an **open research platform** rather than a finalized architecture to support reproducible research, transparent experimentation, and community-driven development. The implementation closely follows the formulation described in the accompanying paper and is intended to serve as a minimal, transparent reference implementation of the proposed mechanism.
