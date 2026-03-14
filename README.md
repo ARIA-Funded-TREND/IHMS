@@ -27,6 +27,19 @@ The repository includes:
 - Pretrained checkpoints corresponding to the experiments reported in the paper
 
 ---
+⚠️ **Important**
+
+Before diving into the code, it is strongly recommended to first understand the recent cellular neurobiological breakthroughs that motivate this architecture.
+
+Study how the brain flexibly integrates signals from the external world (denoted here by _R_ streams) and the internal world (denoted by _C_ streams), and how their interaction gives rise to different mental-state regimes.
+
+Learn how these interactions are modeled through _MOD cooperation laws_ derived from the behaviour of thick-tufted pyramidal two-point neurons (TPNs) operating in distinct processing regimes.
+
+Understand how this mechanism enables the system to generate internal predictions and establish contextual coherence **before attention is applied**, effectively allowing the model to _think before paying attention_.
+
+Following this progression will help you effectively follow the implementation and build upon this architecture
+
+---
 
 ## Reproducing the Main Results
 
