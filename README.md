@@ -154,6 +154,8 @@ https://github.com/user-attachments/assets/892a8595-3071-4b2a-a9c7-d8e151ec111d
 
 Comparison of a permutation-invariant Transformer (left) and the Co⁴ model (right), both trained for 100 episodes; Co⁴ reaches ~700 reward while transformer only reaches 245 reward.
 
+## Scaling AI 
+coming soon
 
 ## 📄 License
 The source code is released under the [Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/) license, permitting reuse and modification for research and academic purposes while restricting commercial use — see the [LICENSE](LICENSE) file for details.

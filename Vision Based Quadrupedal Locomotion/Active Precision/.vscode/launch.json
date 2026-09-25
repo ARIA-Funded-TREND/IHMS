@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug PPO Locotransformer",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/starter/ppo_locotransformer.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "python": "/home/tab7/miniconda3/envs/vision4leg-3.9/bin/python",
+            "env": {
+                "PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION": "python"
+            },
+            "args": [
+                "--config",
+                "config/rl/moving/locotransformer/thin-wide.json",
+                "--seed",
+                "0",
+                "--log_dir",
+                "log/",
+                "--id",
+                "temp",
+                "--overwrite"
+            ]
+        }
+    ]
+}
