@@ -29,7 +29,7 @@ All neural network architectures—including the Spatial Gating Units, the gMLP 
 * **`vision4leg/`**: The main Python package containing PyBullet simulation environments, robot configurations, and task definitions.
 * **`vision4leg.egg-info/`**: Auto-generated metadata directory for Python package installation.
 
-
+To change the speed of reality for any configuration, you can locate `get_image_interval` in `config/mpc/locotransformer/thin-wide.json` for complicated environment and `config/mpc/locotransformer/thin-random-shape.json` for easy environment. Changing it from 1, to 5 means, skipping 5 frames. 
 ---
 
 ### 🏆 Best Pre-trained Models & Inference

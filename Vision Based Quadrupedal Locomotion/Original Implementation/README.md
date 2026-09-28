@@ -1,14 +1,14 @@
-# Original Implementation (Baseline & CO^4)
+# Original Implementation (Baseline & $CO^4$)
 
 This directory contains the **baseline architecture** for the vision-guided quadrupedal locomotion models.
 
-Additionally, it includes the implementation of **CO^4**, where the Query, Key, and Value (QKV) attention matrices are all modulated using the **Apical Amplification equation**.
+Additionally, it includes the implementation of **CO^4**, where the Query, Key, and Value (QKV) attention matrices are all modulated using the **Apical Amplification and Apical Drive+Awake equation**.
 
 ---
 
 ### 🧠 Network Architecture Location
 
-All neural network architectures—including the core MLPs, CNNs, Cross-Modal Transformers, and the CO^4 Apical Amplification implementations—are located here:
+All neural network architectures—including the core MLPs, CNNs, Cross-Modal Transformers, and the $CO^4$ Apical Amplification implementations—are located here:
 
 **`torchrl/networks/nets.py`**
 
@@ -27,6 +27,8 @@ All neural network architectures—including the core MLPs, CNNs, Cross-Modal Tr
 * **`torchrl/`**: The core reinforcement learning library handling PPO algorithms, replay buffers, and neural networks.
 * **`vision4leg/`**: The main Python package containing PyBullet simulation environments, robot configurations, and task definitions.
 * **`vision4leg.egg-info/`**: Auto-generated metadata directory for Python package installation.
+
+To change the speed of reality for any configuration, you can locate `get_image_interval` in `config/mpc/locotransformer/thin-wide.json` for complicated environment and `config/mpc/locotransformer/thin-random-shape.json` for easy environment. Changing it from 1, to 5 means, skipping 5 frames. 
 
 ---
 

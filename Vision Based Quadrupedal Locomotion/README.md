@@ -1,9 +1,12 @@
 
 ---
+### When Reality Outpaces Cognition: *A New Scaling Principle for AI*
+
+This repository contains the implemntation of Vision Guided Quadrupedal Locomotion trained on Baseline Transformer, gMLP and $CO^4$.
 
 ## 📂 Architecture and Ablation Variants
 
-This repository contains several architectural variants and robustness experiments built on top of the core **LocoTransformer** and **MMDR** frameworks. Each subdirectory contains its own isolated implementation and a dedicated `README.md` with specific run instructions.
+This repository contains several architectural variants and robustness experiments built on top of the core **LocoTransformer** framework. Each subdirectory contains its own isolated implementation and a dedicated `README.md` with specific run instructions.
 
 Here is a quick overview of what is happening in each subdirectory:
 
@@ -24,13 +27,6 @@ This folder contains the unmodified base architectures exactly as presented in t
 |:---:|:---:|
 | ![Standard Attention](assets/AttentionViz-Standard-Layer2.gif) | ![Modulated Attention](assets/AttentionViz-SimpleMod-Layer2.gif) |
 
-### `TopK Implementation`
-
-This directory implements a **sparse attention mechanism** (Top-K routing). Instead of computing attention scores across all patches of the depth image, the network selectively attends only to the top K most salient features. This significantly reduces computational overhead while maintaining navigation performance.
-
-| Standard | Modulated-TopK |
-|:---:|:---:|
-| ![Standard](assets/Standard_ThinWide.gif) | ![Modulated](assets/Modulated_TopK_ThinWide.gif) |
 
 ### `Gated MLP`
 
@@ -40,21 +36,6 @@ This variant replaces the standard Multi-Layer Perceptrons (MLPs) in the policy 
 <!-- |:---:|:---:|
 | ![Standard](assets/Standard_ThinWide.gif) | ![Modulated](assets/Modulated_Epochs_700_ThinWide.gif) | -->
 
-### `Active Precision`
-
-This directory focuses on `Active Precision` implementation by scaling the precision based on the environment's immediate local error.
-
-| Standard | Modulated-AP |
-|:---:|:---:|
-| ![Standard](assets/Standard_ThinWide.gif) | ![Modulated](assets/Modulated_ThinWide_ActivePrecision.gif) |
-
-### `Occluded Vision`
-
-Robustness to sensor failure is vital for real-world deployment. Building upon the "simulate_realsense" blinding spots mentioned in the MMDR framework, this directory trains and evaluates policies under **partial observability**. The visual inputs are artificially masked, delayed, or heavily occluded during training to force the reinforcement learning agent to rely more heavily on its proprioceptive reflexes when its vision is temporarily compromised.
-
-| Standard | Modulated |
-|:---:|:---:|
-| ![Standard](assets/Standard_ThinWide_Occluded.gif) | ![Modulated](assets/Modulated_ThinWide_Occluded.gif) |
 
 ## Creating the Environment
 
@@ -135,9 +116,17 @@ PS: Evaluation occurs at different seeds to take mean of the performance. So it 
 * `--seed 0`: The random seed for the policy/actions.
 * `--env_seed 1`: The environment's procedural generation seed, ensuring that obstacles and terrains are generated in a specific, repeatable layout.
 
-```
+## Training Curve
 
-```
+Training curve attached for models trained on `Thin-Wide` or Complicated Environment.
+<p align="center">
+  <img src="assets/rewards_plot_allThinWide_smoothened.png" width="800">
+</p>
+
+Training curve for models trained on `Thin-RandomShape` or Easy Environment.
+<p align="center">
+  <img src="assets/rewards_plot_randomshape_smoothened.png" width="800">
+</p>
 
 ## Model Comparison — ThinWide
 
@@ -166,7 +155,7 @@ The following comparisons evaluate the different models across the available env
 
 * **Best Configurations Only:** Only the best-performing model configurations and checkpoints are included for now.
 * **Simulation Configuration:** There is no direct command-line option to modify the simulation behavior, though visual observation sampling frequency can be adjusted directly inside the config files via the `"get_image_interval"` parameter.
-* **Training Curves:** Training curves and TensorBoard progress plots have not been added here yet.
+
 
 <!-- # ---
 
