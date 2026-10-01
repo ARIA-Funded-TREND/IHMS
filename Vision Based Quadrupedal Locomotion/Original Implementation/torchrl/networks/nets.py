@@ -15,153 +15,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# class MultiheadAttention(nn.Module):
-#     """
-#     Keeps the same class name, but implements the Spatial Gating Unit (SGU)
-#     instead of multi-head attention.
-#     """
-#     def __init__(self, embed_dim, num_heads, seq_len=17, dropout=0.0):
-#         super().__init__()
-#         self.embed_dim = embed_dim
-#         self.num_heads = num_heads
-#         self.norm = nn.LayerNorm(embed_dim // 2)
-#         # Token mixing
-#         self.spatial_proj = nn.Conv1d(
-#             seq_len,
-#             seq_len,
-#             kernel_size=1
-#         )
-#         nn.init.constant_(self.spatial_proj.bias, 1.0)
-#     def forward(
-#         self,
-#         query,
-#         key=None,
-#         value=None,
-#         attn_mask=None,
-#         key_padding_mask=None,
-#     ):
-#         """
-#         query : (B, N, D_ff)
-#         """
-#         u, v = query.chunk(2, dim=-1)
-#         v = self.norm(v)
-#         # (B, N, D/2)
-#         v = self.spatial_proj(v)
-#         out = u * v
-#         return out
-
-# ###############################################################################
-
-# class MLP(nn.Module):
-#     """
-#     gMLP
-#     """
-#     def __init__(
-#         self,
-#         in_features,
-#         seq_len,
-#         hidden_features=None,
-#         out_features=None,
-#         activation=None,
-#         dropout=0.0,
-#     ):
-#         super().__init__()
-#         out_features = out_features or in_features
-#         hidden_features = hidden_features or in_features * 4
-#         self.channel_proj1 = nn.Linear(
-#             in_features,
-#             hidden_features
-#         )
-#         self.activation = nn.GELU()
-#         # Uses the class name MultiheadAttention
-#         self.sgu = MultiheadAttention(
-#             embed_dim=hidden_features,
-#             num_heads=1,
-#             seq_len=seq_len
-#         )
-#         self.channel_proj2 = nn.Linear(
-#             hidden_features // 2,
-#             out_features
-#         )
-#     def forward(self, x):
-#         x = self.channel_proj1(x)
-#         x = self.activation(x)
-#         x = self.sgu(x)
-#         x = self.channel_proj2(x)
-#         return x
-
-
-# class TransformerEncoderLayer(nn.Module):
-#     """
-#     Same class name, but internally behaves like a gMLP block
-#     with DiT-style adaLN modulation.
-#     """
-#     def __init__(
-#         self,
-#         d_model,
-#         nhead,
-#         dim_feedforward=2048,
-#         dropout=0.1,
-#         batch_first=False,
-#         seq_len=17,
-#     ):
-#         super().__init__()
-
-#         self.batch_first = batch_first
-
-#         # DiT uses affine=False because modulation provides shift/scale
-#         self.norm = nn.LayerNorm(
-#             d_model,
-#             elementwise_affine=False,
-#             eps=1e-6,
-#         )
-#         self.mlp = MLP(
-#             in_features=d_model,
-#             seq_len=seq_len,
-#             hidden_features=dim_feedforward,
-#             out_features=d_model,
-#         )
-#         self.dropout = nn.Dropout(dropout)
-#         # DiT-style modulation network
-#         self.adaLN_modulation = nn.Sequential(
-#             nn.SiLU(),
-#             nn.Linear(d_model, 3 * d_model)
-#         )
-#     def modulate(self, x, shift, scale):
-#         return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
-#     # def modulate(self, x, shift, scale):
-#     #     return x * (1 + scale) + shift
-
-#     def forward(
-#         self,
-#         src,
-#         src_mask=None,
-#         src_key_padding_mask=None,
-#     ):
-#         if not self.batch_first:
-#             src = src.transpose(0, 1)
-
-#         # ------------------------------------------------------------------
-#         # No conditioning vector available:
-#         # build one from the tokens themselves.
-#         # (B, N, D) -> (B, D)
-#         # ------------------------------------------------------------------
-#         c = src.mean(dim=1)
-#         # c = src
-#         shift, scale, gate = self.adaLN_modulation(c).chunk(3, dim=-1)
-#         x = self.modulate(
-#             self.norm(src),
-#             shift,
-#             scale
-#         )
-#         x = self.mlp(x)
-#         src = src + gate.unsqueeze(1) * self.dropout(x)
-#         # src = src + gate * self.dropout(x)
-#         if not self.batch_first:
-#             src = src.transpose(0, 1)
-#         return src
-
-
 #################################################################################################################################    
 class TransformerEncoderLayer(nn.Module):
     def __init__(self, d_model, nhead, dim_feedforward=2048, dropout=0.1, batch_first=False):
@@ -249,31 +102,19 @@ class MultiheadAttention(nn.Module):
         q = q.view(B, L_target, self.num_heads, self.head_dim).transpose(1, 2)
         k = k.view(B, L_source, self.num_heads, self.head_dim).transpose(1, 2)
         v = v.view(B, L_source, self.num_heads, self.head_dim).transpose(1, 2)
+        ######## For Standard Architecture ############
         qm, km, vm = q, k, v
-
-
-        qm = q + q*k#F.relu(q + q*k)
-        km = k + qm*k#F.relu(k + q*k)
-        # vm = (v + v*km)#F.relu(v + v*k)
+        ###############################################
+        ######### For Apical Amplification ############
+        qm = q + q*k
+        km = k + qm*k
+        vm = (v + v*km)
+        ##############################################
+        ######### For Apical Drive+Awake #############
+        qm = q + q*k
+        km = k + qm*k
         vm = (v**2 + 2*v + km*(1+torch.abs(v)))
-
-        # qm = (q**2 + 2*q + k*(1+torch.abs(q)))
-        # km = (k**2 + 2*k + qm*(1+torch.abs(k)))
-        # vm = (v**2 + 2*v + km*(1+torch.abs(v)))
-        # # # q = q + q*k
-        # # # k = k + q*k
-        # vm = v**2 + 2*v + q*(1+torch.abs(v))
-        # v = (v + v*k)
-
-        # qm = F.relu(q + q*k)
-        # km = F.relu(k + q*k)
-        # vm = F.relu(v + v*k)
-
-        # qm = q + q*k
-        # km = k + qm*k
-        # vm = v + v*k #v**2 + 2*v + k*(1 + torch.abs(v))
-
-
+        #############################################
 
         # 3. Scaled Dot-Product Attention: (Q * K^T) / sqrt(d_k)
         # q: (B, Heads, L_target, Head_Dim), k.transpose: (B, Heads, Head_Dim, L_source)
@@ -283,11 +124,11 @@ class MultiheadAttention(nn.Module):
         if attn_mask is not None:
             # attn_mask shape: (L_target, L_source), applies to all batches/heads
             scores = scores + attn_mask
-################################### ADDED BY ME ###########################################
+        ######################### ADDED BY ME #######
         
         if self.record_attention:
             self.attn_history.append(scores[0 , 0].detach().cpu().numpy())
-################################## ADDED BY ME ###########################################
+        ########################## ADDED BY ME ######
             
         if key_padding_mask is not None:
             # key_padding_mask shape: (B, L_source), True where padding exists

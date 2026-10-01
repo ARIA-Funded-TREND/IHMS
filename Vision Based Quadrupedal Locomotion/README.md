@@ -228,7 +228,7 @@ The following figures compare the performance of the different models across the
 * **Best Configurations Only:** Only the best-performing model configurations and checkpoints are included for now.
 * **Simulation Configuration:** There is no direct command-line option to modify the simulation behavior, though visual observation sampling frequency can be adjusted directly inside the config files via the `"get_image_interval"` parameter.
 * **Simulation on Easy Configuration:** Due to simpler environment, no simulation on varying speed of reality is conducted.
-* **Results Configuration: ** All results are trained on `MPC` configuration, due to model finding loopholes in rewards, no `RL` configuration has been tested yet.
+* **Results Configuration: ** All results are trained on `MPC` configuration, due to model finding loopholes in rewards, no `RL` configuration has been tested yet. No simulation was ever trained on `get_frame_interval` more than 1, it was **always** evaluated at varying speed.
 
 
 <!-- # ---
