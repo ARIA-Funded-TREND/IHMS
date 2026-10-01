@@ -114,9 +114,12 @@ PS: Evaluation occurs at different seeds to take mean of the performance. So it 
 * `--seed 0`: The random seed for the policy/actions.
 * `--env_seed 1`: The environment's procedural generation seed, ensuring that obstacles and terrains are generated in a specific, repeatable layout.
 
+**Changing the Frame Capture Speed**
+
+Changing the speed of logic can be found in config file for `MPC` and `RL` config as *`get_frame_interval`*. Changing the frame interval from 1 to 50, causes frames to get skipped.
 
 
-
+# Complicated Environment
 ## Training Curve
 
 Figure [1](#fig-training-thinwide) shows the training curves for models trained in the `ThinWide` (Complicated) environment. The curves illustrate how the average reward changes throughout training and provide an overview of the learning behaviour and convergence of the different models.
@@ -128,7 +131,7 @@ Figure [1](#fig-training-thinwide) shows the training curves for models trained 
 **Figure 1:** Training curves for models trained on the `ThinWide` (Complicated) environment.
 
 
-# Performance on 10x
+## Performance on 10x
 | Standard Transformer | Modulated  - Apical Amplification |
 |:---:|:---:|
 | ![Standard](assets/Standard_10x.gif) | ![Modulated](assets/Modulated_700Epochs_10x.gif) |
@@ -137,6 +140,7 @@ Figure [1](#fig-training-thinwide) shows the training curves for models trained 
 |:---:|:---:|
 | ![Standard](assets/Standard-gMLP-10x.gif) | ![Modulated](assets/SimpleMod-K-ADA-ThinWide-NumF-10x.gif) |
 
+**Easy Environment (Thin-RandomShape)**
 
 Figure [2](#fig-training-randomshape) shows the corresponding training curves for models trained in the `Thin-RandomShape` (Easy) environment. Compared with Figure 1, this provides a reference for how the models learn in the simpler environment.
 
@@ -147,7 +151,7 @@ Figure [2](#fig-training-randomshape) shows the corresponding training curves fo
 **Figure 2:** Training curves for models trained on the `Thin-RandomShape` (Easy) environment.
 
 
-## Model Comparison — ThinWide
+## Model Comparison
 Changing the speed of reality ($S_R$) from 1 frame per step to 50 frames per step shows how model behaves when placed in a fast changing environment. 
 
 <p align="center" id="fig-sr-curve-thin-wide">
@@ -190,10 +194,41 @@ Figure [6](#fig-avg-distance) presents the average distance travelled by each mo
 **Figure 6:** Average distance moved across evaluation environments for models trained on `ThinWide`.
 
 
+
+
+# Easy Environment
+## Training Curve
+
+
+Figure [1](#fig-training-randomshape) shows the corresponding training curves for models trained in the `Thin-RandomShape` (Easy) environment. Compared with Figure 1 of Complicated Environment, this provides a reference for how the models learn in the simpler environment.
+
+<p align="center" id="fig-training-randomshape">
+  <img src="assets/rewards_plot_randomshape_smoothened.png" width="800">
+</p>
+
+**Figure 1:** Training curves for models trained on the `Thin-RandomShape` (Easy) environment.
+
+
+## Model Comparison
+Changing the speed of reality ($S_R$) from 1 frame per step to 50 frames per step shows how model behaves when placed in a fast changing environment. 
+
+<p align="center" id="fig-sr-curve-thin-randomshape">
+  <img src="assets/reward_graph_randomshape_4_whiskers.png" width="800">
+</p>
+
+**Figure 2:** $S_R$/$S_C$ curves for models trained on the `Thin-RandomShape` (Easy) environment with 1x and evaluated uptil 50x.
+Figure [2](#fig-sr-curve-thin-randomshape) compares how model's performance vary when changing the speed of reality.
+
+The following figures compare the performance of the different models across the available evaluation environments. Importantly, **all models were trained exclusively using the `Thin-RandomShape` configuration**, allowing differences in performance to be attributed to the model architecture and its ability to generalise across environments.
+
+
+
 ## 📝 Notes
 
 * **Best Configurations Only:** Only the best-performing model configurations and checkpoints are included for now.
 * **Simulation Configuration:** There is no direct command-line option to modify the simulation behavior, though visual observation sampling frequency can be adjusted directly inside the config files via the `"get_image_interval"` parameter.
+* **Simulation on Easy Configuration:** Due to simpler environment, no simulation on varying speed of reality is conducted.
+* **Results Configuration: ** All results are trained on `MPC` configuration, due to model finding loopholes in rewards, no `RL` configuration has been tested yet.
 
 
 <!-- # ---

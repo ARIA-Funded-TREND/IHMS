@@ -158,7 +158,8 @@ Comparison of a permutation-invariant Transformer (left) and the Co⁴ model (ri
 
 A experimental evaluation on current AI scales with respect to if we increase the speed of information. Experiments have been conducted on Vision Based Quadrupedal Locomotion with the goal to avoid obstacles trained using Transformer Backbone with *PPO* policy. The environment has two streams of information as observations; Visual Feed coming from camera and Sensory Actuator movements. Based on these observations, the agent outputs relevant high level actions that gets translated in low level controller commands using MPC controller. 
 
-More experimental details and simulation results can be found in folder `Vision Based Quadrupedal Locomotion`.
+More experimental details and simulation results can be found in the [`Vision Based Quadrupedal Locomotion`](./Vision%20Based%20Quadrupedal%20Locomotion) folder.
+
 
 ## 📄 License
 The source code is released under the [Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/) license, permitting reuse and modification for research and academic purposes while restricting commercial use — see the [LICENSE](LICENSE) file for details.
